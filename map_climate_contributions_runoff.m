@@ -74,13 +74,83 @@ for i = 1:length(clat)
 end
 
 %% map contributions
+clr = cbrewer('div','RdBu',20); clr(clr<0) = 0; clr(clr>1) = 1;
 
 h = figure('Color','w');
 h.Units = 'inches';
 h.Position = [1 1 4.75 9];
-clr = cbrewer('div','RdBu',20); clr(clr<0) = 0; clr(clr>1) = 1;
 
-subplot(11,4,[9 10 13 14])
+% Natural vs. Anthropogenic totals
+Qnat = squeeze(mean(Rs_S0_WY(year>=syear & year<=eyear, :, :) - Rs_S0_WY(year>=1931 & year<=1960, :, :)));
+Qanth = squeeze(mean(Rs_S3_WY(year>=syear & year<=eyear, :, :) - Rs_S3_WY(year>=1931 & year<=1960, :, :))) - Qnat;
+subplot(11,4,[1 2 5 6])
+axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
+        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
+        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+axis off;
+axis image;
+surfm(lat, lon, Qnat);
+caxis([-100 100])
+colormap(gca, clr)
+geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
+geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+ax = gca;
+subplotsqueeze(ax, 1.1)
+ax.Position(1) = 0.06;
+ax.Position(2) = 0.86;
+text(-0.18, 0.83, 'a', 'FontSize',12)
+cb = colorbar('southoutside');
+cb.Position(2) = 0.845;
+cb.Position(1) = ax.Position(1);
+cb.Position(3) = ax.Position(3);
+cb.Position(4) = 0.01;
+cb.Ticks = -100:10:100;
+cb.TickLength = 0.043;
+cb.FontSize = 7;
+xlabel(cb, '\DeltaR_{s}, natural (mm)', 'FontSize',8)
+
+subplot(11,4,[3 4 7 8])
+axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
+        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
+        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+axis off;
+axis image;
+surfm(lat, lon, Qanth);
+caxis([-20 20])
+colormap(gca, clr)
+geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
+geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+ax = gca;
+subplotsqueeze(ax, 1.1)
+ax.Position(2) = 0.86;
+text(-0.18, 0.83, 'b', 'FontSize',12)
+cb = colorbar('southoutside');
+cb.Position(2) = 0.845;
+cb.Position(1) = ax.Position(1);
+cb.Position(3) = ax.Position(3);
+cb.Position(4) = 0.01;
+cb.Ticks = -20:2:20;
+cb.TickLength = 0.043;
+cb.FontSize = 7;
+xlabel(cb, '\DeltaR_{s}, anthropogenic (mm)', 'FontSize',8)
+
+% subcomponents
+h1 = axes('Parent', gcf, 'Position', [0.03 0.65 0.3 0.15]);
+set(h1, 'Color','w')
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
@@ -104,13 +174,11 @@ textm(y3, x3, '3', 'HorizontalAlignment','center', 'VerticalAlignment','middle',
 textm(y4, x4, '4', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',12)
 textm(y5, x5, '5', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',12)
 textm(y6, x6, '6', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',12)
-ttl = title('\DeltaT_{avg}', 'FontSize',12); ttl.Position(2) = 0.84;
-ax = gca;
-ax.Position(1) = 0.06;
-ax.Position(2) = 0.66;
 text(-0.18, 0.84, 'c', 'FontSize',12)
+text(-0.14,0.67,'T_{avg}','FontSize',12, 'HorizontalAlignment','left')
 
-subplot(11,4,[1 2 5 6])
+h1 = axes('Parent', gcf, 'Position', [0.35 0.65 0.3 0.15]);
+set(h1, 'Color','w')
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
@@ -128,13 +196,11 @@ geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-ttl = title('\DeltaP', 'FontSize',12); ttl.Position(2) = 0.84;
-ax = gca;
-ax.Position(1) = 0.06;
-ax.Position(2) = 0.83;
-text(-0.18, 0.84, 'a', 'FontSize',12)
+text(-0.18, 0.84, 'd', 'FontSize',12)
+text(-0.14,0.67,'P','FontSize',12, 'HorizontalAlignment','left')
 
-subplot(11,4,[3 4 7 8])
+h1 = axes('Parent', gcf, 'Position', [0.67 0.65 0.3 0.15]);
+set(h1, 'Color','w')
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
@@ -152,49 +218,20 @@ geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-ttl = title('\DeltaPET', 'FontSize',12); ttl.Position(2) = 0.84;
-ax = gca;
-ax.Position(1) = 0.46;
-ax.Position(2) = 0.83;
-text(-0.18, 0.84, 'b', 'FontSize',12)
+text(-0.18, 0.84, 'e', 'FontSize',12)
+text(-0.14,0.67,'PET','FontSize',12, 'HorizontalAlignment','left')
 
-subplot(11,4,[11 12 15 16])
-axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
-        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
-        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
-        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
-        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
-axis off;
-axis image;
-surfm(lat, lon, squeeze(mean(Rs_S3_WY(year>=syear & year<=eyear, :, :) - Rs_S0_WY(year>=syear & year<=eyear, :, :))));
-caxis([-20 20])
-colormap(gca, clr)
-geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
-geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-ttl = title('All', 'FontSize',12); ttl.Position(2) = 0.84;
-ax = gca;
-ax.Position(1) = 0.46;
-ax.Position(2) = 0.66;
-text(-0.18, 0.84, 'd', 'FontSize',12)
-
-cb = colorbar('eastoutside');
-cb.Position = [0.85 0.66 0.03 0.29];
+cb = colorbar('southoutside');
+cb.Position = [0.03 0.655 0.94 0.01];
 cb.Ticks = -20:2:20;
-cb.TickLength = 0.05;
-ylabel(cb, '\DeltaR_{s} (mm)', 'FontSize',10)
+cb.TickLength = 0.018;
+cb.FontSize = 7;
+ylabel(cb, '\DeltaR_{s}, anthropogenic forcing (mm)', 'FontSize',8)
 
 %% Contributions by season / subbasin
 clr = wesanderson('fantasticfox1');
 clr = clr(1:3,:);
-% clr = [174,1,126;
-%     77,146,33;
-%     33,102,172]/255;
-ysep = 0.085;
+ysep = 0.082;
 ystart = 0.03;
 
 subplot(11,4,41:44)
@@ -227,7 +264,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',8);
 ylb.Position(1) = -0.7;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 6','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(-1.8,ylim(2),'k','FontSize',12)
+text(-1.8,ylim(2),'l','FontSize',12)
 
 subplot(11,4,37:40)
 Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 5) .* repmat(area(MRBidx == 5)', size(Rs_S0, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
@@ -259,7 +296,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',8);
 ylb.Position(1) = -0.7;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 5','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(-1.8,ylim(2),'j','FontSize',12)
+text(-1.8,ylim(2),'k','FontSize',12)
 
 subplot(11,4,33:36)
 Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 4) .* repmat(area(MRBidx == 4)', size(Rs_S0, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
@@ -291,7 +328,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',8);
 ylb.Position(1) = -0.7;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 4','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(-1.8,ylim(2),'i','FontSize',12)
+text(-1.8,ylim(2),'j','FontSize',12)
 
 subplot(11,4,29:32)
 Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 3) .* repmat(area(MRBidx == 3)', size(Rs_S0, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
@@ -323,7 +360,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',8);
 ylb.Position(1) = -0.7;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 3','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(-1.8,ylim(2),'h','FontSize',12)
+text(-1.8,ylim(2),'i','FontSize',12)
 
 subplot(11,4,25:28)
 Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 2) .* repmat(area(MRBidx == 2)', size(Rs_S0, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
@@ -355,7 +392,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',8);
 ylb.Position(1) = -0.7;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 2','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(-1.8,ylim(2),'g','FontSize',12)
+text(-1.8,ylim(2),'h','FontSize',12)
 
 subplot(11,4,21:24)
 Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 1) .* repmat(area(MRBidx == 1)', size(Rs_S0, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
@@ -387,7 +424,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',8);
 ylb.Position(1) = -0.7;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 1','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(-1.8,ylim(2),'f','FontSize',12)
+text(-1.8,ylim(2),'g','FontSize',12)
 
 subplot(11,4,17:20)
 Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', size(Rs_S0, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
@@ -419,10 +456,11 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',8);
 ylb.Position(1) = -0.7;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'All regions','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-lgd = legend('\DeltaT_{avg}','\DeltaPET','\DeltaP', 'Location','northoutside', 'Orientation', 'horizontal');
-lgd.Position(2) = 0.61;
+lgd = legend('T_{avg}','PET','P', 'Location','northoutside', 'Orientation', 'horizontal');
+lgd.Position(2) = 0.58;
+lgd.Position(1) = 0.26;
 legend('boxoff')
-text(-1.8,ylim(2),'e','FontSize',12)
+text(-1.8,ylim(2),'f','FontSize',12)
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300',['./output/map-climate-contributions-runoff-',num2str(syear),'-',num2str(eyear),'.tif'])
