@@ -13,8 +13,8 @@ clon = readmatrix('lon.txt');
 nt = length(yr); ny = length(lat); nx = length(lon);
 
 s0 = readmatrix("wb.lmrb.awc.runoff.hamonpet.s0", 'FileType','text');
-s1 = readmatrix("wb.lmrb.awc.runoff.hamonpet.s1a", 'FileType','text');
-s2 = readmatrix("wb.lmrb.awc.runoff.hamonpet.s2a", 'FileType','text');
+s1 = readmatrix("wb.lmrb.awc.runoff.hamonpet.s1", 'FileType','text');
+s2 = readmatrix("wb.lmrb.awc.runoff.hamonpet.s2", 'FileType','text');
 s3 = readmatrix("wb.lmrb.awc.runoff.hamonpet.s3", 'FileType','text');
 
 Rs_S0 = NaN(nt, ny, nx);
