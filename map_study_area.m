@@ -42,8 +42,7 @@ lat = [43.0529 42.4869 40.6818 39.1123 38.9789 38.7094];
 lon = [-98.5621 -96.4122 -95.846 -94.5877 -92.754 -91.4379];
 gage = {'Fort Randall Dam', 'Sioux City, IA', 'Nebraska City, NE', 'Kansas City, MO', 'Boonville, MO', 'Hermann, MO'};
 
-scatterm(lat(1:5), lon(1:5), 40, "black", "filled", 'MarkerFaceColor','w', 'MarkerEdgeColor','k', 'Marker','o')
-scatterm(lat(6), lon(6), 150, "black", "filled", 'MarkerFaceColor','w', 'MarkerEdgeColor','k', 'Marker','pentagram')
+scatterm(lat(6), lon(6), 200, "black", "filled", 'MarkerFaceColor','w', 'MarkerEdgeColor','k', 'Marker','pentagram')
 
 ax = gca;
 subplotsqueeze(ax, 1.2)
@@ -55,7 +54,7 @@ T = readtable('./data/Missouri_Big6_UpdatedUnregulatedFlow_DailyMonthlyWY_avgCMS
 T.Properties.VariableNames = {'Year','FTRA','SUX','NCNE','MKC','MNMO','HEMO'};
 plot(T.Year, T.HEMO, 'k-', 'LineWidth',1.5)
 hold on;
-plot([1931 2019], [mean(T.HEMO(T.Year>=1931 & T.Year<=1960)) mean(T.HEMO(T.Year>=1931 & T.Year<=1960))], 'k-', 'LineWidth',0.5)
+plot([1931 1960], [mean(T.HEMO(T.Year>=1931 & T.Year<=1960)) mean(T.HEMO(T.Year>=1931 & T.Year<=1960))], 'k--', 'LineWidth',0.5)
 plot([1981 2019], [mean(T.HEMO(T.Year>=1981 & T.Year<=2019)) mean(T.HEMO(T.Year>=1981 & T.Year<=2019))], 'k--', 'LineWidth',0.75)
 hold off;
 set(gca, 'TickDir','out', 'XLim', [1930 2020], 'TickLength',[0.015 0.])
