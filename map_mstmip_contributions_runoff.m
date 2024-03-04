@@ -63,24 +63,102 @@ LULCC = squeeze(mean(mean(WB_SG2(idx,:,:,:) - WB_SG1(idx,:,:,:), 4), 1)); LULCC(
 CO2 = squeeze(mean(mean(WB_SG3(idx,:,:,:) - WB_SG2(idx,:,:,:), 4), 1)); CO2(MRBidx==0) = NaN;
 All = squeeze(mean(mean(WB_SG3(idx,:,:,:) - WB_RG1(idx,:,:,:), 4), 1)); All(MRBidx==0) = NaN;
 
+% log2
+Clim(Clim>0) = log2(Clim(Clim>0)); Clim(Clim<0) = -log2(abs(Clim(Clim<0)));
+LULCC(LULCC>0) = log2(LULCC(LULCC>0)); LULCC(LULCC<0) = -log2(abs(LULCC(LULCC<0)));
+CO2(CO2>0) = log2(CO2(CO2>0)); CO2(CO2<0) = -log2(abs(CO2(CO2<0)));
+All(All>0) = log2(All(All>0)); All(All<0) = -log2(abs(All(All<0)));
+
 %% map contributions
-clr = cbrewer('div','RdBu',20); clr(clr<0) = 0; clr(clr>1) = 1;
+clr = cbrewer('div','RdBu',14); clr(clr<0) = 0; clr(clr>1) = 1;
 [LON, LAT] = meshgrid(lon,lat);
 
 h = figure('Color','w');
 h.Units = 'inches';
-h.Position = [1 1 6.5 6.25];
+h.Position = [1 1 6.5 7.3];
 
-subplot(6,2,[1 3])
+subplot(7,2,[1 3])
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
-        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
+        'off','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
+        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+axis off;
+axis image;
+surfm(LAT-0.25, LON-0.25, All);
+caxis([-7 7])
+colormap(gca, clr)
+geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
+geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+ttl = title('\DeltaR_{s}', 'FontSize',9,'FontWeight','normal'); ttl.Position(2) = 0.84;
+ax = gca;
+ax.Position(1) = 0.06;
+ax.Position(2) = 0.76;
+text(-0.16,0.83,'a','FontSize',12)
+
+subplot(7,2,[2 4])
+axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
+        'off','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','MLabelParallel','north',...
         'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
 axis off;
 axis image;
 surfm(LAT-0.25, LON-0.25, Clim);
-caxis([-100 100])
+caxis([-7 7])
+colormap(gca, clr)
+geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
+geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+ttl = title('\DeltaR_{s,climate}', 'FontSize',9,'FontWeight','normal'); ttl.Position(2) = 0.84;
+ax = gca;
+ax.Position(1) = 0.48;
+ax.Position(2) = 0.76;
+text(-0.16,0.83,'b','FontSize',12)
+
+subplot(7,2,[5 7])
+axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
+        'off','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
+        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+axis off;
+axis image;
+surfm(LAT-0.25, LON-0.25, LULCC);
+caxis([-7 7])
+colormap(gca, clr)
+geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
+geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+ttl = title('\DeltaR_{s,LULCC}', 'FontSize',9, 'FontWeight','normal'); ttl.Position(2) = 0.84;
+ax = gca;
+ax.Position(1) = 0.06;
+ax.Position(2) = 0.5;
+text(-0.16,0.83,'c','FontSize',12)
+
+subplot(7,2,[6 8])
+axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
+        'off','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
+        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+axis off;
+axis image;
+surfm(LAT-0.25, LON-0.25, CO2);
+caxis([-7 7])
 colormap(gca, clr)
 geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
 geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
@@ -95,88 +173,17 @@ textm(y3, x3, '3', 'HorizontalAlignment','center', 'VerticalAlignment','middle',
 textm(y4, x4, '4', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',12)
 textm(y5, x5, '5', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',12)
 textm(y6, x6, '6', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',12)
-ttl = title('Climate', 'FontSize',12); ttl.Position(2) = 0.84;
-ax = gca;
-ax.Position(1) = 0.06;
-ax.Position(2) = 0.72;
-text(-0.16,0.83,'a','FontSize',12)
-
-subplot(6,2,[2 4])
-axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
-        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
-        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
-        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
-        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
-axis off;
-axis image;
-surfm(LAT-0.25, LON-0.25, LULCC);
-caxis([-100 100])
-colormap(gca, clr)
-geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
-geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-ttl = title('LULCC', 'FontSize',12); ttl.Position(2) = 0.84;
+ttl = title('\DeltaR_{s,CO2}', 'FontSize',9, 'FontWeight','normal'); ttl.Position(2) = 0.84;
 ax = gca;
 ax.Position(1) = 0.48;
-ax.Position(2) = 0.72;
-text(-0.16,0.83,'b','FontSize',12)
-
-subplot(6,2,[5 7])
-axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
-        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
-        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
-        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
-        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
-axis off;
-axis image;
-surfm(LAT-0.25, LON-0.25, CO2);
-caxis([-100 100])
-colormap(gca, clr)
-geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
-geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-ttl = title('CO_{2} fertilization', 'FontSize',12); ttl.Position(2) = 0.84;
-ax = gca;
-ax.Position(1) = 0.06;
-ax.Position(2) = 0.42;
-text(-0.16,0.83,'c','FontSize',12)
-
-subplot(6,2,[6 8])
-axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
-        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
-        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
-        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
-        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
-axis off;
-axis image;
-surfm(LAT-0.25, LON-0.25, All);
-caxis([-100 100])
-colormap(gca, clr)
-geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
-geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
-ttl = title('All', 'FontSize',12); ttl.Position(2) = 0.84;
-ax = gca;
-ax.Position(1) = 0.48;
-ax.Position(2) = 0.42;
+ax.Position(2) = 0.5;
 text(-0.16,0.83,'d','FontSize',12)
 
 cb = colorbar('eastoutside');
-cb.Position = [0.85 0.43 0.03 0.52];
-cb.Ticks = -100:10:100;
-cb.TickLength = 0.055;
+cb.Position = [0.85 0.52 0.03 0.44];
+cb.Ticks = -7:1:7;
+cb.TickLabels = {'-128','-64','-32','-16','-8','-4','-2','0','2','4','8','16','32','64','128'};
+cb.TickLength = 0.062;
 ylabel(cb, '\DeltaR_{s} (mm)', 'FontSize',10)
 
 %% make contribution plots, by region, below that one
@@ -237,7 +244,7 @@ for i = 1:nk
 end
 
 % time series
-subplot(6,2,9:10)
+subplot(7,2,9:12)
 Clim = squeeze(Q_SG1(:,1,:) - Q_RG1(:,1,:));
 LULCC = squeeze(Q_SG2(:,1,:) - Q_SG1(:,1,:));
 CO2 = squeeze(Q_SG3(:,1,:) - Q_SG2(:,1,:));
@@ -274,7 +281,7 @@ dat = [mean(Clim(idx, :))
     mean(LULCC(idx, :))
     mean(CO2(idx, :))];
 
-subplot(6,2,11:12)
+subplot(7,2,13:14)
 b = bar(1:7,dat,'stacked');
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
@@ -284,16 +291,16 @@ set(ax, 'XLim',[0.5 7.5], 'TickDir','out', 'XTickLabel',{'All','1','2','3','4','
 box off;
 ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',10);
 xlabel('Region', 'FontSize',10)
-lgd = legend(ax, 'Climate','LULCC','CO_{2} fertilization', 'Location','north',...
+lgd = legend(ax, '\DeltaQ_{climate}','\DeltaQ_{LULCC}','\DeltaQ_{CO2}', 'Location','north',...
     'Orientation','horizontal');
 legend('boxoff')
-lgd.Position(2) = 0.34;
+lgd.Position(2) = 0.44;
 ax.Position(2) = 0.07;
 
 text(-0.55, 1100, 'f','FontSize',12)
 
 set(gcf,'PaperPositionMode','auto')
-print('-dtiff','-f1','-r300','./output/map-mstmip-contributions-runoff.tif')
+print('-dtiff','-f1','-r300','./output/map-preindustrial-contributions-runoff.tif')
 close all;
 
 %% plot LULCC vs Climate effects
