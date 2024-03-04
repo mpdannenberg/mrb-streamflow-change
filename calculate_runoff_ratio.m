@@ -60,7 +60,7 @@ clear a bx clat clon i mo P P12 WYP windowSize xi yi yr Ptot year;
 
 %% gage runoff ratio
 T = readtable('./data/Missouri_Big6_UpdatedUnregulatedFlow_DailyMonthlyWY_avgCMS.xlsx',...
-'Sheet','WaterYear_cms');
+    'Sheet','WaterYear_cms');
 T.Properties.VariableNames = {'Year','FTRA','SUX','NCNE','MKC','MNMO','HEMO'};
 [~, ia, ib] = intersect(year_WBM, T.Year);
 RR_gage = T.HEMO(ib) ./ Ptot_WBM(ia);
