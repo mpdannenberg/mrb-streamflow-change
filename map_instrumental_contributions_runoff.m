@@ -89,7 +89,7 @@ subplotsqueeze(ax, 1.1)
 ax.Position(1) = 0.05;
 ax.Position(2) = 0.82;
 text(-0.18, 0.83, 'a', 'FontSize',12)
-ttl = title('\DeltaQ_{CO2}','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,CO2}','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
 
 subplot(11,4,[3 4 7 8])
@@ -115,7 +115,7 @@ subplotsqueeze(ax, 1.1)
 ax.Position(1) = 0.48;
 ax.Position(2) = 0.82;
 text(-0.18, 0.83, 'b', 'FontSize',12)
-ttl = title('\DeltaQ_{LULCC}','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,LULCC}','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
 
 subplot(11,4,[9 10 13 14])
@@ -141,7 +141,7 @@ subplotsqueeze(ax, 1.1)
 ax.Position(1) = 0.06;
 ax.Position(2) = 0.64;
 text(-0.18, 0.83, 'c', 'FontSize',12)
-ttl = title('\DeltaQ_{climate} (MsTMIP)','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,climate} (MsTMIP)','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
 
 
@@ -251,11 +251,12 @@ subplotsqueeze(ax, 1.1)
 ax.Position(1) = 0.48;
 ax.Position(2) = 0.64;
 text(-0.18, 0.83, 'd', 'FontSize',12)
-ttl = title('\DeltaQ_{climate} (MW11)','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,climate} (MW11)','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
-annotation("line",[0.47 0.47],[0.65 0.63])
-annotation("line",[0.47 0.05],[0.63 0.63])
-annotation("line",[0.05 0.05],[0.63 0.61])
+% annotation("line",[0.47 0.47],[0.65 0.63])
+% annotation("line",[0.47 0.05],[0.63 0.63])
+% annotation("line",[0.05 0.05],[0.63 0.61])
+annotation("line",[0.47 0.05],[0.65 0.61])
 annotation("line",[0.89 0.89],[0.65 0.61])
 
 subplot(11,4,[17 18 21 22])
@@ -281,7 +282,7 @@ subplotsqueeze(ax, 1.1)
 ax.Position(1) = 0.06;
 ax.Position(2) = 0.46;
 text(-0.18, 0.83, 'e', 'FontSize',12)
-ttl = title('\DeltaQ_{climate} (natural)','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,climate} (natural)','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
 
 subplot(11,4,[19 20 23 24])
@@ -307,14 +308,16 @@ subplotsqueeze(ax, 1.1)
 ax.Position(1) = 0.48;
 ax.Position(2) = 0.46;
 text(-0.18, 0.83, 'f', 'FontSize',12)
-ttl = title('\DeltaQ_{climate} (anthropogenic)','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,climate} (anthropogenic)','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
-annotation("line",[0.47 0.47],[0.47 0.45])
-annotation("line",[0.47 0.03],[0.45 0.45])
-annotation("line",[0.03 0.03],[0.45 0.43])
-annotation("line",[0.89 0.89],[0.47 0.45])
-annotation("line",[0.89 0.95],[0.45 0.45])
-annotation("line",[0.95 0.95],[0.45 0.43])
+% annotation("line",[0.47 0.47],[0.47 0.45])
+% annotation("line",[0.47 0.03],[0.45 0.45])
+% annotation("line",[0.03 0.03],[0.45 0.43])
+% annotation("line",[0.89 0.89],[0.47 0.45])
+% annotation("line",[0.89 0.95],[0.45 0.45])
+% annotation("line",[0.95 0.95],[0.45 0.43])
+annotation("line",[0.47 0.03],[0.47 0.43])
+annotation("line",[0.89 0.95],[0.47 0.43])
 
 % subcomponents
 h1 = axes('Parent', gcf, 'Position', [0.03 0.28 0.3 0.15]);
@@ -345,7 +348,7 @@ textm(y4, x4, '4', 'HorizontalAlignment','center', 'VerticalAlignment','middle',
 textm(y5, x5, '5', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',12)
 textm(y6, x6, '6', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',12)
 text(-0.18, 0.84, 'g', 'FontSize',12)
-ttl = title('\DeltaQ_{climate} (T_{avg})','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,climate} (T_{avg})','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
 
 h1 = axes('Parent', gcf, 'Position', [0.35 0.28 0.3 0.15]);
@@ -370,7 +373,7 @@ geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 text(-0.18, 0.84, 'h', 'FontSize',12)
-ttl = title('\DeltaQ_{climate} (P)','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,climate} (P)','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
 
 h1 = axes('Parent', gcf, 'Position', [0.67 0.28 0.3 0.15]);
@@ -394,7 +397,7 @@ geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 text(-0.18, 0.84, 'i', 'FontSize',12)
-ttl = title('\DeltaQ_{climate} (PET)','FontSize',9,'FontWeight','normal');
+ttl = title('\DeltaR_{s,climate} (PET)','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
 
 cb = colorbar('southoutside');
@@ -434,13 +437,13 @@ box off;
 hold on;
 scatter(1:13, sum(dat,2), 20, "black","filled")
 ax.Position(1) = 0.12;
-ax.Position(2) = 0.06;
+ax.Position(2) = 0.1;
 ax.Position(3) = 0.84;
 ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',8);
 ylb.Position(1) = -0.7;
 ylim = get(ax, 'YLim');
 lgd = legend('T_{avg}','PET','P', 'Location','northoutside', 'Orientation', 'horizontal');
-lgd.Position(2) = 0.18;
+lgd.Position(2) = 0.21;
 lgd.Position(1) = 0.5;
 legend('boxoff')
 text(-1.1,ylim(2),'j','FontSize',12)
