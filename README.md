@@ -15,13 +15,13 @@ Estimate streamflow from water-budget model simulations driven by Williams varia
 Compare modeled and measured runoff ratio (for supplemental material)
 
 #### compare_models_gages.m
-Compared modeled streamflow (unscaled MsTMIP, scaled MsTMIP, and WBM) to measured streamflow at Hermann, MO gage
+Compared modeled streamflow (unscaled MsTMIP, scaled MsTMIP, and WBM) to measured streamflow at Hermann, MO gage (for supplemental material)
 
 
 ### Make study area maps
 
 #### map_study_area.m
-Map of study area with major streams, regions, and instrumental flow
+Map of study area with major streams, regions, and instrumental and modeled flow anomalies
 
 #### map_nlcd.m
 Map of study area land cover (for supplemental material)
@@ -32,15 +32,18 @@ Map and time series of 1800-2010 land cover change using on the LULCC data used 
 
 ### Calculate driver contributions and make maps / tables of results
 
-#### map_mstmip_contributions_runoff.m
-Calculate MsTMIP drivers of flow and make maps of contributions
+#### map_preindustrial_contributions_runoff.m
+Calculate MsTMIP drivers of flow and make maps of contributions relative to "pre-Industrial" baselines
 
-#### map_climate_contributions_runoff.m
-Calculate interannual variability and anthropogenic trend contributions to flow (including separation of precipitaiton, PET, and temperature) and make maps of contributions
+#### map_instrumental_contributions_runoff.m
+Calculate drivers of flow (including anthropogenic vs. natural climate effects and separation of precipitaiton, PET, and temperature effects) and make maps of contributions to early instrumental baseline (i.e., earliest 30-year period of flow records)
 
-#### make_table_dQ.m
+#### make_table_dQ_PreIndustrial.m
+Calculate contribution of each MsTMIP factor (climate, LULCC, and CO2) to flow change relative to "pre-Industrial" baselines
+
+#### make_table_dQ_GageOverlap.m
 Calculate contribution of each factor to flow change between mid and late century and compare to measured flow change
 
-#### make_mstmip_contributions_table.m
-Make table of contributions from MsTMIP drivers (relative to MsTMIP baselines) to flow change for each subregion
+#### plot_monthly_climate_contributions_runoff.m
+Calculate contributions of each factor to flow change between mid and late century for each individual region within the MRB
 
