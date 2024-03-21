@@ -153,5 +153,5 @@ for i = 1:nk
     dQens.dQ_co2(i) = [sprintf('%0.1f ',x1-x0),char(177),sprintf(' %0.1f',1.96*se)];
 end
 
-writetable(dQ, './output/table-s6-difference-in-means.xlsx');
-writetable(dQens, './output/difference-in-means-mstmip-models.xlsx');
+writetable(dQ, './output/difference-in-means-instrumental.xlsx');
+writetable(dQens, './output/difference-in-means-mstmip-models-instrumental.xlsx');
