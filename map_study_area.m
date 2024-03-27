@@ -14,10 +14,10 @@ clr = wesanderson('fantasticfox1');
 % hydrology
 subplot(3,1,[1 2])
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
-        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
-        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
-        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
-        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','on',...
+        'ParallelLabel','on','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel',49.9999999,...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',7, 'FontColor',[0.5 0.5 0.5])
 axis off;
 axis image;
 geoshow(SR1(1,1),'FaceColor',[0.8 0.8 0.8],'EdgeColor','none','LineWidth',1.2)
@@ -47,9 +47,9 @@ scatterm(lat(6), lon(6), 50, "black", "filled", 'MarkerFaceColor','w', 'MarkerEd
 textm(lat(6)+0.5, lon(6)-0.9, 'Hermann, MO','HorizontalAlignment','left','VerticalAlignment','bottom','FontSize',8)
 
 ax = gca;
-subplotsqueeze(ax, 1.2)
-text(-0.16,0.83,'a', 'FontSize',12)
-ax.Position(2) = 0.39;
+subplotsqueeze(ax, 1.15)
+text(-0.169,0.84,'a', 'FontSize',12)
+ax.Position(2) = 0.4;
 
 % gage
 subplot(3,1,3)
@@ -98,7 +98,7 @@ ax.Position(1) = 0.17;
 ax.Position(2) = 0.08;
 ax.Position(3) = 0.775;
 ax.Position(4) = 0.23;
-text(1916,ax.YLim(2),'b', 'FontSize',12)
+text(1916,ax.YLim(2),'b', 'FontSize',12, 'VerticalAlignment','baseline')
 
 lgd = legend([p1 p2 p3],...
     sprintf('gage (trend = %0.1f \x00B1 %0.1f m^3 s^{-1} yr^{-1})',beta(1),se(1)*1.96),...
