@@ -50,10 +50,10 @@ clr = [71 107 161
     186 217 235
     112 163 186]/255;
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
-        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
-        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
-        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
-        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','on',...
+        'ParallelLabel','on','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel',49.99999999,...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',7, 'FontColor',[0.5 0.5 0.5])
 axis off;
 axis image;
 surfm(lat, lon, temp)
@@ -67,17 +67,33 @@ geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',1.2)
 caxis([0.5 15.5])
 colormap(clr)
 ax = gca;
-ax.Position(2) = 0.15;
+ax.Position(2) = 0.22;
 
 cb = colorbar('southoutside');
 cb.Position(1) = 0.13;
-cb.Position(2) = 0.12;
+cb.Position(2) = 0.2;
 cb.Position(3) = 0.78;
-cb.FontSize = 10;
+cb.FontSize = 8;
 cb.Ticks = 1:15;
 cb.TickLength = 0;
-cb.TickLabels = {'11','21','22','23','24','31','41','42','43','52','71','81','82','90','95'};
-xlabel(cb, 'NLCD cover class')
+cb.TickLabels = {'Open water','Developed, open space','Developed, low intensity',...
+    'Developed, medium intensity','Developed, high intensity','Barren land',...
+    'Deciduous forest','Evergreen forest','Mixed forest','Shrub/scrub',...
+    'Grassland/herbaceous','Pasture/hay','Cultivated crops',...
+    'Woody wetlands','Emergent herbaceous westlands'};
+xs = cb.Position(1);
+xe = cb.Position(3) + cb.Position(1);
+xw = (xe - xs) / 15;
+ys = cb.Position(2);
+yw = cb.Position(4);
+for i = 1:15
+    x = xs + (xw/2) + xw*(i-1);
+    annotation('textbox',[xs+xw*(i-1) ys xw yw],'String',sprintf('%0.1f',100*T.Proportion(i)),...
+        'BackgroundColor','none', "FontSize",8, "VerticalAlignment","middle", "HorizontalAlignment","center",'LineWidth',1.1)
+end
+annotation('textbox',[0 ys xs-0.01 yw],'String','f_{c} (%)',...
+        'BackgroundColor','none', "FontSize",10, "VerticalAlignment","middle",...
+        "HorizontalAlignment","right",'Color','k', 'EdgeColor','none')
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/mrb-nlcd.tif')
