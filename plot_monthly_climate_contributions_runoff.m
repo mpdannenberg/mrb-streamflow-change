@@ -274,6 +274,10 @@ ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 1','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
 text(-1.8,ylim(2),'a','FontSize',12)
 
+lgd = legend('T_{avg}','PET','P', 'Location','northoutside', 'Orientation', 'horizontal');
+lgd.Position(2) = 0.96;
+legend('boxoff')
+
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300',['./output/monthly-climate-contributions-runoff-',num2str(syear),'-',num2str(eyear),'.tif'])
 close all;
