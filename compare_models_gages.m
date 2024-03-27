@@ -26,6 +26,7 @@ box off;
 ylabel('Q (m^{3} s^{-1})')
 ylim = get(gca, 'YLim');
 text(1931, ylim(2), 'a', 'FontSize',12, 'VerticalAlignment','middle')
+ax = gca; ax.Position(2) = ax.Position(2)+0.02;
 
 subplot(2,4,4)
 lim = [0 10500];
@@ -36,8 +37,9 @@ set(gca, 'TickDir','out', 'YLim',lim, 'XLim',lim, 'TickLength',[0.04 0])
 box off;
 ax = gca;
 ax.Position(1) = 0.82;
+ax.Position(2) = ax.Position(2)+0.02;
 ax.Position(3) = 0.12;
-ylabel('MsTMIP')
+ylabel('MsTMIP (m^{3} s^{-1})')
 r = corr(T.HEMO(ib), mean(Q(ia,:), 2), 'rows','pairwise');
 text(lim(2), lim(1), sprintf('R = %.02f', r), 'HorizontalAlignment','right', 'VerticalAlignment','bottom', 'FontSize',7)
 text(diff(lim)*0.04, lim(2), 'b', 'FontSize',12, 'VerticalAlignment','middle')
@@ -53,8 +55,10 @@ plot(T.Year(ib), T.HEMO(ib), 'k-', 'LineWidth',1.5)
 set(gca, 'TickDir','out')
 box off;
 ylabel('Q (m^{3} s^{-1})')
+xlabel('Water year')
 ylim = get(gca, 'YLim');
 text(1931, ylim(2), 'c', 'FontSize',12, 'VerticalAlignment','middle')
+ax = gca; ax.Position(2) = ax.Position(2)+0.02;
 
 subplot(2,4,8)
 lim = [0 8000];
@@ -65,9 +69,10 @@ set(gca, 'TickDir','out', 'YLim',lim, 'XLim',lim, 'TickLength',[0.04 0])
 box off;
 ax = gca;
 ax.Position(1) = 0.82;
+ax.Position(2) = ax.Position(2)+0.02;
 ax.Position(3) = 0.12;
-ylabel('WBM')
-xl = xlabel('Gage');
+ylabel('MW11 (m^{3} s^{-1})')
+xl = xlabel('Gage (m^{3} s^{-1})');
 xl.Position(2) = -1500;
 r = corr(T.HEMO(ib), mean(Q(ia,:), 2), 'rows','pairwise');
 text(lim(2), lim(1), sprintf('R = %.02f', r), 'HorizontalAlignment','right', 'VerticalAlignment','bottom', 'FontSize',7)

@@ -122,6 +122,7 @@ set(gca, 'YLim',[0 0.6], 'XLim',[1930 2010], 'TickDir','out')
 box off;
 ylabel('Runoff ratio (Q/P)')
 ylim = get(gca, 'YLim');
+xlabel('Water year')
 
 mdl = fitlm(year_gage(year_gage >= 1931 & year_gage <= 2010),...
     RR_gage(year_gage >= 1931 & year_gage <= 2010));
@@ -131,7 +132,7 @@ mdl = fitlm(year_mstmip(year_mstmip >= 1931 & year_mstmip <= 2010),...
 text(1932, ylim(2)-0.07*diff(ylim), ['{\bfMsTMIP}: ', sprintf('%0.03f ',mdl.Coefficients.Estimate(2)*10), 'decade^{-1} (p = ',sprintf('%0.02f',mdl.Coefficients.pValue(2)),')'], 'FontSize',8, 'Color', clr(1,:))
 mdl = fitlm(year_WBM(year_WBM >= 1931 & year_WBM <= 2010),...
     RR_WBM(year_WBM >= 1931 & year_WBM <= 2010));
-text(1932, ylim(2)-0.14*diff(ylim), ['{\bfWBM}: ', sprintf('%0.03f ',mdl.Coefficients.Estimate(2)*10), 'decade^{-1} (p = ',sprintf('%0.02f',mdl.Coefficients.pValue(2)),')'], 'FontSize',8, 'Color',clr(2,:))
+text(1932, ylim(2)-0.14*diff(ylim), ['{\bfMW11}: ', sprintf('%0.03f ',mdl.Coefficients.Estimate(2)*10), 'decade^{-1} (p = ',sprintf('%0.02f',mdl.Coefficients.pValue(2)),')'], 'FontSize',8, 'Color',clr(2,:))
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/mrb-runoff-ratios.tif')
