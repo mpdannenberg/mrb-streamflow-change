@@ -207,11 +207,11 @@ clr = [105 171 99
     28 99 48
     204 186 125
     171 112 41]/255;
-plot(yr, tree, '-','Color',clr(2,:), 'LineWidth',1.2)
+plot(yr, tree, '-','Color',clr(2,:), 'LineWidth',2)
 hold on;
-plot(yr, grass, '-','Color',clr(1,:), 'LineWidth',1.2)
-plot(yr, crop, '-','Color',clr(4,:), 'LineWidth',1.2)
-plot(yr, shrub, '-','Color',clr(3,:), 'LineWidth',1.2)
+plot(yr, grass, '-','Color',clr(1,:), 'LineWidth',2)
+plot(yr, crop, '-','Color',clr(4,:), 'LineWidth',2)
+plot(yr, shrub, '-','Color',clr(3,:), 'LineWidth',2)
 set(ax, 'XLim',[syear eyear], 'TickDir','out')
 box off;
 lgd = legend('tree','grass','crop','shrub', 'Location','north', 'Orientation','horizontal');
@@ -219,6 +219,7 @@ lgd.Position(2) = 0.22;
 legend('boxoff')
 yl = ylabel('f_{c}', 'Rotation',0,'HorizontalAlignment','right','VerticalAlignment','middle', 'FontSize',10);
 yl.Position(1) = 1785;
+xlabel('Year')
 text(1805, 0.6, 'e', 'FontSize',12)
 hold off;
 
