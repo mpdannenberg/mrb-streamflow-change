@@ -6,6 +6,13 @@ worldland= shaperead('landareas', 'UseGeoCoords', true);
 load('./data/Mizu_streams_Strahler3_7.mat')
 load('./data/MRB_subregions_GP.mat')
 
+[x1, y1] = centroid(polyshape(SR1(1).Lon, SR1(1).Lat));
+[x2, y2] = centroid(polyshape(SR2(2).Lon, SR2(2).Lat));
+[x3, y3] = centroid(polyshape(SR3(2).Lon, SR3(2).Lat));
+[x4, y4] = centroid(polyshape(SR4(2).Lon, SR4(2).Lat));
+[x5, y5] = centroid(polyshape(SR5(2).Lon, SR5(2).Lat));
+[x6, y6] = centroid(polyshape(SR6(2).Lon, SR6(2).Lat));
+
 h = figure('Color','w');
 h.Units = 'inches';
 h.Position = [1 1 4.5 5];
@@ -38,6 +45,12 @@ geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',1.)
 geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',1.)
 geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',1.)
 geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',1.)
+textm(y1, x1, '1', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',16)
+textm(y2, x2, '2', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',16)
+textm(y3, x3, '3', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',16)
+textm(y4, x4, '4', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',16)
+textm(y5, x5, '5', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',16)
+textm(y6, x6, '6', 'HorizontalAlignment','center', 'VerticalAlignment','middle', 'FontWeight','bold', 'FontSize',16)
 
 lat = [43.0529 42.4869 40.6818 39.1123 38.9789 38.7094];
 lon = [-98.5621 -96.4122 -95.846 -94.5877 -92.754 -91.4379];
