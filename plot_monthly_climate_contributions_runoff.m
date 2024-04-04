@@ -87,16 +87,22 @@ Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 6) .* repmat(area(MRBidx == 6)',
 Q_S1 = reshape(sum((0.001 .* Rs_S1(:, MRBidx == 6) .* repmat(area(MRBidx == 6)', size(Rs_S1, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S2 = reshape(sum((0.001 .* Rs_S2(:, MRBidx == 6) .* repmat(area(MRBidx == 6)', size(Rs_S2, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S3 = reshape(sum((0.001 .* Rs_S3(:, MRBidx == 6) .* repmat(area(MRBidx == 6)', size(Rs_S3, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
-dat = [mean(Q_S1(:,year>=syear & year<=eyear), 2)-mean(Q_S0(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S2(:,year>=syear & year<=eyear), 2)-mean(Q_S1(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S3(:,year>=syear & year<=eyear), 2)-mean(Q_S2(:,year>=syear & year<=eyear), 2)];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat = [mean(dQ_tavg(:,year>=syear & year<=eyear), 2) - mean(dQ_tavg(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_pet(:,year>=syear & year<=eyear), 2) - mean(dQ_pet(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_p(:,year>=syear & year<=eyear), 2) - mean(dQ_p(:,year>=1931 & year<=1960), 2)];
 Q_S0 = filter(bx, a, sum((0.001 .* Rs_S0(:, MRBidx == 6) .* repmat(area(MRBidx == 6)', size(Rs_S0, 1), 1)), 2), [], 1); Q_S0 = Q_S0(mos==9) / (365 * 24 * 60 * 60);
 Q_S1 = filter(bx, a, sum((0.001 .* Rs_S1(:, MRBidx == 6) .* repmat(area(MRBidx == 6)', size(Rs_S1, 1), 1)), 2), [], 1); Q_S1 = Q_S1(mos==9) / (365 * 24 * 60 * 60);
 Q_S2 = filter(bx, a, sum((0.001 .* Rs_S2(:, MRBidx == 6) .* repmat(area(MRBidx == 6)', size(Rs_S2, 1), 1)), 2), [], 1); Q_S2 = Q_S2(mos==9) / (365 * 24 * 60 * 60);
 Q_S3 = filter(bx, a, sum((0.001 .* Rs_S3(:, MRBidx == 6) .* repmat(area(MRBidx == 6)', size(Rs_S3, 1), 1)), 2), [], 1); Q_S3 = Q_S3(mos==9) / (365 * 24 * 60 * 60);
-dat(13,:) = [mean(Q_S1(year>=syear & year<=eyear))-mean(Q_S0(year>=syear & year<=eyear)) ...
-    mean(Q_S2(year>=syear & year<=eyear))-mean(Q_S1(year>=syear & year<=eyear)) ...
-    mean(Q_S3(year>=syear & year<=eyear))-mean(Q_S2(year>=syear & year<=eyear))];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat(13,:) = [mean(dQ_tavg(year>=syear & year<=eyear)) - mean(dQ_tavg(year>=1931 & year<=1960)) ...
+    mean(dQ_pet(year>=syear & year<=eyear)) - mean(dQ_pet(year>=1931 & year<=1960)) ...
+    mean(dQ_p(year>=syear & year<=eyear)) - mean(dQ_p(year>=1931 & year<=1960))];
 b = bar(1:13,dat,'stacked');
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
@@ -119,16 +125,22 @@ Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 5) .* repmat(area(MRBidx == 5)',
 Q_S1 = reshape(sum((0.001 .* Rs_S1(:, MRBidx == 5) .* repmat(area(MRBidx == 5)', size(Rs_S1, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S2 = reshape(sum((0.001 .* Rs_S2(:, MRBidx == 5) .* repmat(area(MRBidx == 5)', size(Rs_S2, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S3 = reshape(sum((0.001 .* Rs_S3(:, MRBidx == 5) .* repmat(area(MRBidx == 5)', size(Rs_S3, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
-dat = [mean(Q_S1(:,year>=syear & year<=eyear), 2)-mean(Q_S0(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S2(:,year>=syear & year<=eyear), 2)-mean(Q_S1(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S3(:,year>=syear & year<=eyear), 2)-mean(Q_S2(:,year>=syear & year<=eyear), 2)];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat = [mean(dQ_tavg(:,year>=syear & year<=eyear), 2) - mean(dQ_tavg(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_pet(:,year>=syear & year<=eyear), 2) - mean(dQ_pet(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_p(:,year>=syear & year<=eyear), 2) - mean(dQ_p(:,year>=1931 & year<=1960), 2)];
 Q_S0 = filter(bx, a, sum((0.001 .* Rs_S0(:, MRBidx == 5) .* repmat(area(MRBidx == 5)', size(Rs_S0, 1), 1)), 2), [], 1); Q_S0 = Q_S0(mos==9) / (365 * 24 * 60 * 60);
 Q_S1 = filter(bx, a, sum((0.001 .* Rs_S1(:, MRBidx == 5) .* repmat(area(MRBidx == 5)', size(Rs_S1, 1), 1)), 2), [], 1); Q_S1 = Q_S1(mos==9) / (365 * 24 * 60 * 60);
 Q_S2 = filter(bx, a, sum((0.001 .* Rs_S2(:, MRBidx == 5) .* repmat(area(MRBidx == 5)', size(Rs_S2, 1), 1)), 2), [], 1); Q_S2 = Q_S2(mos==9) / (365 * 24 * 60 * 60);
 Q_S3 = filter(bx, a, sum((0.001 .* Rs_S3(:, MRBidx == 5) .* repmat(area(MRBidx == 5)', size(Rs_S3, 1), 1)), 2), [], 1); Q_S3 = Q_S3(mos==9) / (365 * 24 * 60 * 60);
-dat(13,:) = [mean(Q_S1(year>=syear & year<=eyear))-mean(Q_S0(year>=syear & year<=eyear)) ...
-    mean(Q_S2(year>=syear & year<=eyear))-mean(Q_S1(year>=syear & year<=eyear)) ...
-    mean(Q_S3(year>=syear & year<=eyear))-mean(Q_S2(year>=syear & year<=eyear))];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat(13,:) = [mean(dQ_tavg(year>=syear & year<=eyear)) - mean(dQ_tavg(year>=1931 & year<=1960)) ...
+    mean(dQ_pet(year>=syear & year<=eyear)) - mean(dQ_pet(year>=1931 & year<=1960)) ...
+    mean(dQ_p(year>=syear & year<=eyear)) - mean(dQ_p(year>=1931 & year<=1960))];
 b = bar(1:13,dat,'stacked');
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
@@ -151,16 +163,22 @@ Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 4) .* repmat(area(MRBidx == 4)',
 Q_S1 = reshape(sum((0.001 .* Rs_S1(:, MRBidx == 4) .* repmat(area(MRBidx == 4)', size(Rs_S1, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S2 = reshape(sum((0.001 .* Rs_S2(:, MRBidx == 4) .* repmat(area(MRBidx == 4)', size(Rs_S2, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S3 = reshape(sum((0.001 .* Rs_S3(:, MRBidx == 4) .* repmat(area(MRBidx == 4)', size(Rs_S3, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
-dat = [mean(Q_S1(:,year>=syear & year<=eyear), 2)-mean(Q_S0(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S2(:,year>=syear & year<=eyear), 2)-mean(Q_S1(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S3(:,year>=syear & year<=eyear), 2)-mean(Q_S2(:,year>=syear & year<=eyear), 2)];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat = [mean(dQ_tavg(:,year>=syear & year<=eyear), 2) - mean(dQ_tavg(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_pet(:,year>=syear & year<=eyear), 2) - mean(dQ_pet(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_p(:,year>=syear & year<=eyear), 2) - mean(dQ_p(:,year>=1931 & year<=1960), 2)];
 Q_S0 = filter(bx, a, sum((0.001 .* Rs_S0(:, MRBidx == 4) .* repmat(area(MRBidx == 4)', size(Rs_S0, 1), 1)), 2), [], 1); Q_S0 = Q_S0(mos==9) / (365 * 24 * 60 * 60);
 Q_S1 = filter(bx, a, sum((0.001 .* Rs_S1(:, MRBidx == 4) .* repmat(area(MRBidx == 4)', size(Rs_S1, 1), 1)), 2), [], 1); Q_S1 = Q_S1(mos==9) / (365 * 24 * 60 * 60);
 Q_S2 = filter(bx, a, sum((0.001 .* Rs_S2(:, MRBidx == 4) .* repmat(area(MRBidx == 4)', size(Rs_S2, 1), 1)), 2), [], 1); Q_S2 = Q_S2(mos==9) / (365 * 24 * 60 * 60);
 Q_S3 = filter(bx, a, sum((0.001 .* Rs_S3(:, MRBidx == 4) .* repmat(area(MRBidx == 4)', size(Rs_S3, 1), 1)), 2), [], 1); Q_S3 = Q_S3(mos==9) / (365 * 24 * 60 * 60);
-dat(13,:) = [mean(Q_S1(year>=syear & year<=eyear))-mean(Q_S0(year>=syear & year<=eyear)) ...
-    mean(Q_S2(year>=syear & year<=eyear))-mean(Q_S1(year>=syear & year<=eyear)) ...
-    mean(Q_S3(year>=syear & year<=eyear))-mean(Q_S2(year>=syear & year<=eyear))];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat(13,:) = [mean(dQ_tavg(year>=syear & year<=eyear)) - mean(dQ_tavg(year>=1931 & year<=1960)) ...
+    mean(dQ_pet(year>=syear & year<=eyear)) - mean(dQ_pet(year>=1931 & year<=1960)) ...
+    mean(dQ_p(year>=syear & year<=eyear)) - mean(dQ_p(year>=1931 & year<=1960))];
 b = bar(1:13,dat,'stacked');
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
@@ -183,16 +201,22 @@ Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 3) .* repmat(area(MRBidx == 3)',
 Q_S1 = reshape(sum((0.001 .* Rs_S1(:, MRBidx == 3) .* repmat(area(MRBidx == 3)', size(Rs_S1, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S2 = reshape(sum((0.001 .* Rs_S2(:, MRBidx == 3) .* repmat(area(MRBidx == 3)', size(Rs_S2, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S3 = reshape(sum((0.001 .* Rs_S3(:, MRBidx == 3) .* repmat(area(MRBidx == 3)', size(Rs_S3, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
-dat = [mean(Q_S1(:,year>=syear & year<=eyear), 2)-mean(Q_S0(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S2(:,year>=syear & year<=eyear), 2)-mean(Q_S1(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S3(:,year>=syear & year<=eyear), 2)-mean(Q_S2(:,year>=syear & year<=eyear), 2)];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat = [mean(dQ_tavg(:,year>=syear & year<=eyear), 2) - mean(dQ_tavg(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_pet(:,year>=syear & year<=eyear), 2) - mean(dQ_pet(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_p(:,year>=syear & year<=eyear), 2) - mean(dQ_p(:,year>=1931 & year<=1960), 2)];
 Q_S0 = filter(bx, a, sum((0.001 .* Rs_S0(:, MRBidx == 3) .* repmat(area(MRBidx == 3)', size(Rs_S0, 1), 1)), 2), [], 1); Q_S0 = Q_S0(mos==9) / (365 * 24 * 60 * 60);
 Q_S1 = filter(bx, a, sum((0.001 .* Rs_S1(:, MRBidx == 3) .* repmat(area(MRBidx == 3)', size(Rs_S1, 1), 1)), 2), [], 1); Q_S1 = Q_S1(mos==9) / (365 * 24 * 60 * 60);
 Q_S2 = filter(bx, a, sum((0.001 .* Rs_S2(:, MRBidx == 3) .* repmat(area(MRBidx == 3)', size(Rs_S2, 1), 1)), 2), [], 1); Q_S2 = Q_S2(mos==9) / (365 * 24 * 60 * 60);
 Q_S3 = filter(bx, a, sum((0.001 .* Rs_S3(:, MRBidx == 3) .* repmat(area(MRBidx == 3)', size(Rs_S3, 1), 1)), 2), [], 1); Q_S3 = Q_S3(mos==9) / (365 * 24 * 60 * 60);
-dat(13,:) = [mean(Q_S1(year>=syear & year<=eyear))-mean(Q_S0(year>=syear & year<=eyear)) ...
-    mean(Q_S2(year>=syear & year<=eyear))-mean(Q_S1(year>=syear & year<=eyear)) ...
-    mean(Q_S3(year>=syear & year<=eyear))-mean(Q_S2(year>=syear & year<=eyear))];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat(13,:) = [mean(dQ_tavg(year>=syear & year<=eyear)) - mean(dQ_tavg(year>=1931 & year<=1960)) ...
+    mean(dQ_pet(year>=syear & year<=eyear)) - mean(dQ_pet(year>=1931 & year<=1960)) ...
+    mean(dQ_p(year>=syear & year<=eyear)) - mean(dQ_p(year>=1931 & year<=1960))];
 b = bar(1:13,dat,'stacked');
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
@@ -215,16 +239,22 @@ Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 2) .* repmat(area(MRBidx == 2)',
 Q_S1 = reshape(sum((0.001 .* Rs_S1(:, MRBidx == 2) .* repmat(area(MRBidx == 2)', size(Rs_S1, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S2 = reshape(sum((0.001 .* Rs_S2(:, MRBidx == 2) .* repmat(area(MRBidx == 2)', size(Rs_S2, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S3 = reshape(sum((0.001 .* Rs_S3(:, MRBidx == 2) .* repmat(area(MRBidx == 2)', size(Rs_S3, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
-dat = [mean(Q_S1(:,year>=syear & year<=eyear), 2)-mean(Q_S0(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S2(:,year>=syear & year<=eyear), 2)-mean(Q_S1(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S3(:,year>=syear & year<=eyear), 2)-mean(Q_S2(:,year>=syear & year<=eyear), 2)];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat = [mean(dQ_tavg(:,year>=syear & year<=eyear), 2) - mean(dQ_tavg(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_pet(:,year>=syear & year<=eyear), 2) - mean(dQ_pet(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_p(:,year>=syear & year<=eyear), 2) - mean(dQ_p(:,year>=1931 & year<=1960), 2)];
 Q_S0 = filter(bx, a, sum((0.001 .* Rs_S0(:, MRBidx == 2) .* repmat(area(MRBidx == 2)', size(Rs_S0, 1), 1)), 2), [], 1); Q_S0 = Q_S0(mos==9) / (365 * 24 * 60 * 60);
 Q_S1 = filter(bx, a, sum((0.001 .* Rs_S1(:, MRBidx == 2) .* repmat(area(MRBidx == 2)', size(Rs_S1, 1), 1)), 2), [], 1); Q_S1 = Q_S1(mos==9) / (365 * 24 * 60 * 60);
 Q_S2 = filter(bx, a, sum((0.001 .* Rs_S2(:, MRBidx == 2) .* repmat(area(MRBidx == 2)', size(Rs_S2, 1), 1)), 2), [], 1); Q_S2 = Q_S2(mos==9) / (365 * 24 * 60 * 60);
 Q_S3 = filter(bx, a, sum((0.001 .* Rs_S3(:, MRBidx == 2) .* repmat(area(MRBidx == 2)', size(Rs_S3, 1), 1)), 2), [], 1); Q_S3 = Q_S3(mos==9) / (365 * 24 * 60 * 60);
-dat(13,:) = [mean(Q_S1(year>=syear & year<=eyear))-mean(Q_S0(year>=syear & year<=eyear)) ...
-    mean(Q_S2(year>=syear & year<=eyear))-mean(Q_S1(year>=syear & year<=eyear)) ...
-    mean(Q_S3(year>=syear & year<=eyear))-mean(Q_S2(year>=syear & year<=eyear))];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat(13,:) = [mean(dQ_tavg(year>=syear & year<=eyear)) - mean(dQ_tavg(year>=1931 & year<=1960)) ...
+    mean(dQ_pet(year>=syear & year<=eyear)) - mean(dQ_pet(year>=1931 & year<=1960)) ...
+    mean(dQ_p(year>=syear & year<=eyear)) - mean(dQ_p(year>=1931 & year<=1960))];
 b = bar(1:13,dat,'stacked');
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
@@ -247,16 +277,22 @@ Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx == 1) .* repmat(area(MRBidx == 1)',
 Q_S1 = reshape(sum((0.001 .* Rs_S1(:, MRBidx == 1) .* repmat(area(MRBidx == 1)', size(Rs_S1, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S2 = reshape(sum((0.001 .* Rs_S2(:, MRBidx == 1) .* repmat(area(MRBidx == 1)', size(Rs_S2, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S3 = reshape(sum((0.001 .* Rs_S3(:, MRBidx == 1) .* repmat(area(MRBidx == 1)', size(Rs_S3, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
-dat = [mean(Q_S1(:,year>=syear & year<=eyear), 2)-mean(Q_S0(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S2(:,year>=syear & year<=eyear), 2)-mean(Q_S1(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S3(:,year>=syear & year<=eyear), 2)-mean(Q_S2(:,year>=syear & year<=eyear), 2)];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat = [mean(dQ_tavg(:,year>=syear & year<=eyear), 2) - mean(dQ_tavg(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_pet(:,year>=syear & year<=eyear), 2) - mean(dQ_pet(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_p(:,year>=syear & year<=eyear), 2) - mean(dQ_p(:,year>=1931 & year<=1960), 2)];
 Q_S0 = filter(bx, a, sum((0.001 .* Rs_S0(:, MRBidx == 1) .* repmat(area(MRBidx == 1)', size(Rs_S0, 1), 1)), 2), [], 1); Q_S0 = Q_S0(mos==9) / (365 * 24 * 60 * 60);
 Q_S1 = filter(bx, a, sum((0.001 .* Rs_S1(:, MRBidx == 1) .* repmat(area(MRBidx == 1)', size(Rs_S1, 1), 1)), 2), [], 1); Q_S1 = Q_S1(mos==9) / (365 * 24 * 60 * 60);
 Q_S2 = filter(bx, a, sum((0.001 .* Rs_S2(:, MRBidx == 1) .* repmat(area(MRBidx == 1)', size(Rs_S2, 1), 1)), 2), [], 1); Q_S2 = Q_S2(mos==9) / (365 * 24 * 60 * 60);
 Q_S3 = filter(bx, a, sum((0.001 .* Rs_S3(:, MRBidx == 1) .* repmat(area(MRBidx == 1)', size(Rs_S3, 1), 1)), 2), [], 1); Q_S3 = Q_S3(mos==9) / (365 * 24 * 60 * 60);
-dat(13,:) = [mean(Q_S1(year>=syear & year<=eyear))-mean(Q_S0(year>=syear & year<=eyear)) ...
-    mean(Q_S2(year>=syear & year<=eyear))-mean(Q_S1(year>=syear & year<=eyear)) ...
-    mean(Q_S3(year>=syear & year<=eyear))-mean(Q_S2(year>=syear & year<=eyear))];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat(13,:) = [mean(dQ_tavg(year>=syear & year<=eyear)) - mean(dQ_tavg(year>=1931 & year<=1960)) ...
+    mean(dQ_pet(year>=syear & year<=eyear)) - mean(dQ_pet(year>=1931 & year<=1960)) ...
+    mean(dQ_p(year>=syear & year<=eyear)) - mean(dQ_p(year>=1931 & year<=1960))];
 b = bar(1:13,dat,'stacked');
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);

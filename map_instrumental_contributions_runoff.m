@@ -253,11 +253,10 @@ ax.Position(2) = 0.64;
 text(-0.18, 0.83, 'd', 'FontSize',12)
 ttl = title('\DeltaR_{s,climate} (MW11)','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
-% annotation("line",[0.47 0.47],[0.65 0.63])
-% annotation("line",[0.47 0.05],[0.63 0.63])
-% annotation("line",[0.05 0.05],[0.63 0.61])
-annotation("line",[0.47 0.05],[0.65 0.61])
-annotation("line",[0.89 0.89],[0.65 0.61])
+annotation("line",[0.05 0.89],[0.625 0.625], 'LineWidth',1.5)
+annotation("line",[0.05 0.05],[0.625 0.61], 'LineWidth',1.5)
+annotation("line",[0.89 0.89],[0.625 0.61], 'LineWidth',1.5)
+annotation("line",[0.68 0.68],[0.625 0.637], 'LineWidth',1.5)
 
 subplot(11,4,[17 18 21 22])
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
@@ -310,14 +309,10 @@ ax.Position(2) = 0.46;
 text(-0.18, 0.83, 'f', 'FontSize',12)
 ttl = title('\DeltaR_{s,climate} (anthropogenic)','FontSize',9,'FontWeight','normal');
 ttl.Position(2) = 0.83;
-% annotation("line",[0.47 0.47],[0.47 0.45])
-% annotation("line",[0.47 0.03],[0.45 0.45])
-% annotation("line",[0.03 0.03],[0.45 0.43])
-% annotation("line",[0.89 0.89],[0.47 0.45])
-% annotation("line",[0.89 0.95],[0.45 0.45])
-% annotation("line",[0.95 0.95],[0.45 0.43])
-annotation("line",[0.47 0.03],[0.47 0.43])
-annotation("line",[0.89 0.95],[0.47 0.43])
+annotation("line",[0.03 0.95],[0.44 0.44], 'LineWidth',1.5)
+annotation("line",[0.03 0.03],[0.44 0.425], 'LineWidth',1.5)
+annotation("line",[0.95 0.95],[0.44 0.425], 'LineWidth',1.5)
+annotation("line",[0.68 0.68],[0.44 0.455], 'LineWidth',1.5)
 
 % subcomponents
 h1 = axes('Parent', gcf, 'Position', [0.03 0.28 0.3 0.15]);
@@ -417,16 +412,22 @@ Q_S0 = reshape(sum((0.001 .* Rs_S0(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', s
 Q_S1 = reshape(sum((0.001 .* Rs_S1(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', size(Rs_S1, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S2 = reshape(sum((0.001 .* Rs_S2(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', size(Rs_S2, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
 Q_S3 = reshape(sum((0.001 .* Rs_S3(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', size(Rs_S3, 1), 1)), 2), 12, []) ./ (repmat(days_in_month', 1, length(year)) * 24 * 60 * 60);
-dat = [mean(Q_S1(:,year>=syear & year<=eyear), 2)-mean(Q_S0(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S2(:,year>=syear & year<=eyear), 2)-mean(Q_S1(:,year>=syear & year<=eyear), 2) ...
-    mean(Q_S3(:,year>=syear & year<=eyear), 2)-mean(Q_S2(:,year>=syear & year<=eyear), 2)];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat = [mean(dQ_tavg(:,year>=syear & year<=eyear), 2) - mean(dQ_tavg(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_pet(:,year>=syear & year<=eyear), 2) - mean(dQ_pet(:,year>=1931 & year<=1960), 2) ...
+    mean(dQ_p(:,year>=syear & year<=eyear), 2) - mean(dQ_p(:,year>=1931 & year<=1960), 2)];
 Q_S0 = filter(bx, a, sum((0.001 .* Rs_S0(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', size(Rs_S0, 1), 1)), 2), [], 1); Q_S0 = Q_S0(mos==9) / (365 * 24 * 60 * 60);
 Q_S1 = filter(bx, a, sum((0.001 .* Rs_S1(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', size(Rs_S1, 1), 1)), 2), [], 1); Q_S1 = Q_S1(mos==9) / (365 * 24 * 60 * 60);
 Q_S2 = filter(bx, a, sum((0.001 .* Rs_S2(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', size(Rs_S2, 1), 1)), 2), [], 1); Q_S2 = Q_S2(mos==9) / (365 * 24 * 60 * 60);
 Q_S3 = filter(bx, a, sum((0.001 .* Rs_S3(:, MRBidx > 0) .* repmat(area(MRBidx > 0)', size(Rs_S3, 1), 1)), 2), [], 1); Q_S3 = Q_S3(mos==9) / (365 * 24 * 60 * 60);
-dat(13,:) = [mean(Q_S1(year>=syear & year<=eyear))-mean(Q_S0(year>=syear & year<=eyear)) ...
-    mean(Q_S2(year>=syear & year<=eyear))-mean(Q_S1(year>=syear & year<=eyear)) ...
-    mean(Q_S3(year>=syear & year<=eyear))-mean(Q_S2(year>=syear & year<=eyear))];
+dQ_tavg = Q_S1 - Q_S0;
+dQ_pet = Q_S2 - Q_S1;
+dQ_p = Q_S3 - Q_S2;
+dat(13,:) = [mean(dQ_tavg(year>=syear & year<=eyear)) - mean(dQ_tavg(year>=1931 & year<=1960)) ...
+    mean(dQ_pet(year>=syear & year<=eyear)) - mean(dQ_pet(year>=1931 & year<=1960)) ...
+    mean(dQ_p(year>=syear & year<=eyear)) - mean(dQ_p(year>=1931 & year<=1960))];
 b = bar(1:13,dat,'stacked');
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
@@ -451,5 +452,7 @@ text(-1.1,ylim(2),'j','FontSize',12)
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300',['./output/map-instrumental-contributions-runoff-',num2str(syear),'-',num2str(eyear),'.tif'])
 close all;
+
+
 
 
