@@ -61,7 +61,7 @@ textm(lat(6)+0.5, lon(6)-0.9, 'Hermann, MO','HorizontalAlignment','left','Vertic
 
 ax = gca;
 subplotsqueeze(ax, 1.15)
-text(-0.169,0.84,'a', 'FontSize',12)
+text(-0.169,0.84,'A', 'FontSize',12, 'FontWeight','bold')
 ax.Position(2) = 0.4;
 
 % gage
@@ -111,7 +111,7 @@ ax.Position(1) = 0.17;
 ax.Position(2) = 0.08;
 ax.Position(3) = 0.775;
 ax.Position(4) = 0.23;
-text(1916,ax.YLim(2),'b', 'FontSize',12, 'VerticalAlignment','baseline')
+text(1916,ax.YLim(2),'B', 'FontSize',12, 'VerticalAlignment','baseline', 'FontWeight','bold')
 
 lgd = legend([p1 p2 p3],...
     sprintf('gage (trend = %0.1f \x00B1 %0.1f m^3 s^{-1} yr^{-1})',beta(1),se(1)*1.96),...

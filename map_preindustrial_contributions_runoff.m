@@ -99,7 +99,7 @@ ttl = title('\DeltaR_{s}', 'FontSize',9,'FontWeight','normal'); ttl.Position(2) 
 ax = gca;
 ax.Position(1) = 0.06;
 ax.Position(2) = 0.76;
-text(-0.16,0.83,'a','FontSize',12)
+text(-0.16,0.83,'A','FontSize',12, 'FontWeight','bold')
 
 subplot(7,2,[2 4])
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
@@ -123,7 +123,7 @@ ttl = title('\DeltaR_{s,climate}', 'FontSize',9,'FontWeight','normal'); ttl.Posi
 ax = gca;
 ax.Position(1) = 0.48;
 ax.Position(2) = 0.76;
-text(-0.16,0.83,'b','FontSize',12)
+text(-0.16,0.83,'B','FontSize',12, 'FontWeight','bold')
 
 subplot(7,2,[5 7])
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
@@ -147,7 +147,7 @@ ttl = title('\DeltaR_{s,LULCC}', 'FontSize',9, 'FontWeight','normal'); ttl.Posit
 ax = gca;
 ax.Position(1) = 0.06;
 ax.Position(2) = 0.5;
-text(-0.16,0.83,'c','FontSize',12)
+text(-0.16,0.83,'C','FontSize',12, 'FontWeight','bold')
 
 subplot(7,2,[6 8])
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
@@ -177,7 +177,7 @@ ttl = title('\DeltaR_{s,CO2}', 'FontSize',9, 'FontWeight','normal'); ttl.Positio
 ax = gca;
 ax.Position(1) = 0.48;
 ax.Position(2) = 0.5;
-text(-0.16,0.83,'d','FontSize',12)
+text(-0.16,0.83,'D','FontSize',12, 'FontWeight','bold')
 
 cb = colorbar('eastoutside');
 cb.Position = [0.85 0.52 0.03 0.44];
@@ -269,7 +269,7 @@ yl = ylabel('\DeltaQ (m^{3} s^{-1})', 'FontSize',10);
 yl.Position(1) = 1892;
 hold off;
 
-text(1884,6000,'e','FontSize',12)
+text(1884,6000,'E','FontSize',12, 'FontWeight','bold')
 
 
 % overall
@@ -297,7 +297,7 @@ legend('boxoff')
 lgd.Position(2) = 0.44;
 ax.Position(2) = 0.07;
 
-text(-0.55, 1100, 'f','FontSize',12)
+text(-0.55, 1100, 'F','FontSize',12, 'FontWeight','bold')
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/map-preindustrial-contributions-runoff.tif')
