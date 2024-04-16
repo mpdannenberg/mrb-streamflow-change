@@ -6,7 +6,7 @@ modeled changes in Missouri River flow due to climate, LULCC, and CO2 fertilizat
 ### Estimate Q from model simulations
 
 #### model_mstmip_contributions_runoff.m
-Estimate runoff and streamflow for MsTMIP simulations (and rescale to match mean and variance of gage streamflow)
+Estimate runoff and streamflow for MsTMIP simulations 
 
 #### model_climate_contributions_runoff.m
 Estimate streamflow from water-budget model simulations driven by Williams variability vs. trends climate data
@@ -15,7 +15,7 @@ Estimate streamflow from water-budget model simulations driven by Williams varia
 Compare modeled and measured runoff ratio (for supplemental material)
 
 #### compare_models_gages.m
-Compared modeled streamflow (unscaled MsTMIP, scaled MsTMIP, and WBM) to measured streamflow at Hermann, MO gage (for supplemental material)
+Compared modeled streamflow (MsTMIP and MW11) to measured streamflow at Hermann, MO gage (supplementary figure)
 
 
 ### Make study area maps
@@ -24,10 +24,10 @@ Compared modeled streamflow (unscaled MsTMIP, scaled MsTMIP, and WBM) to measure
 Map of study area with major streams, regions, and instrumental and modeled flow anomalies
 
 #### map_nlcd.m
-Map of study area land cover (for supplemental material)
+Map of study area land cover (supplementary figure)
 
 #### map_mstmip_lulcc.m
-Map and time series of 1800-2010 land cover change using on the LULCC data used in the MsTMIP simulations
+Map and time series of 1800-2010 land cover change using on the LULCC data used in the MsTMIP simulations (supplementary figure)
 
 
 ### Calculate driver contributions and make maps / tables of results
