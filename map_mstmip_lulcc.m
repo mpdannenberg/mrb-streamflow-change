@@ -113,7 +113,7 @@ ax = gca;
 ax.Position(1) = 0.1;
 ax.Position(2) = 0.7;
 subplotsqueeze(ax, 1.1)
-text(-0.16, 0.83, 'A', 'FontSize',12, 'FontWeight','bold')
+text(-0.16, 0.83, 'a', 'FontSize',12, 'FontWeight','bold')
 
 subplot(3,2,2)
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
@@ -138,7 +138,7 @@ ax = gca;
 ax.Position(1) = 0.56;
 ax.Position(2) = 0.7;
 subplotsqueeze(ax, 1.1)
-text(-0.16, 0.83, 'B', 'FontSize',12, 'FontWeight','bold')
+text(-0.16, 0.83, 'b', 'FontSize',12, 'FontWeight','bold')
 
 subplot(3,2,3)
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
@@ -163,7 +163,7 @@ ax = gca;
 ax.Position(1) = 0.1;
 ax.Position(2) = 0.4;
 subplotsqueeze(ax, 1.1)
-text(-0.16, 0.83, 'C', 'FontSize',12, 'FontWeight','bold')
+text(-0.16, 0.83, 'c', 'FontSize',12, 'FontWeight','bold')
 
 subplot(3,2,4)
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
@@ -188,7 +188,7 @@ ax = gca;
 ax.Position(1) = 0.56;
 ax.Position(2) = 0.4;
 subplotsqueeze(ax, 1.1)
-text(-0.16, 0.83, 'D', 'FontSize',12, 'FontWeight','bold')
+text(-0.16, 0.83, 'd', 'FontSize',12, 'FontWeight','bold')
 
 cb = colorbar('southoutside');
 cb.Position = [0.1 0.34 0.8 0.025];
@@ -220,7 +220,7 @@ legend('boxoff')
 yl = ylabel('f_{c}', 'Rotation',0,'HorizontalAlignment','right','VerticalAlignment','middle', 'FontSize',10);
 yl.Position(1) = 1785;
 xlabel('Year')
-text(1805, 0.6, 'E', 'FontSize',12, 'FontWeight','bold')
+text(1805, 0.6, 'e', 'FontSize',12, 'FontWeight','bold')
 hold off;
 
 set(gcf,'PaperPositionMode','auto')

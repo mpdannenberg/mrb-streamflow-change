@@ -124,7 +124,7 @@ lgd = legend('T_{avg}','PET','P', 'Location','northoutside', 'Orientation', 'hor
 lgd.Position(2) = 0.95;
 lgd.Position(1) = 0.5;
 legend('boxoff')
-text(0.8,ylim(2),'A','FontSize',12, 'FontWeight','bold')
+text(0.8,ylim(2),'a','FontSize',12, 'FontWeight','bold')
 
 % Region 6
 subplot(5,2,10)
@@ -163,7 +163,7 @@ ax.Position(3) = xw;
 ax.Position(4) = yh;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 6','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(1,ylim(2),'G','FontSize',12, 'FontWeight','bold')
+text(1,ylim(2),'g','FontSize',12, 'FontWeight','bold')
 
 % Region 5
 subplot(5,2,9)
@@ -204,7 +204,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',10);
 ylb.Position(1) = -2.25;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 5','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(1,ylim(2),'F','FontSize',12, 'FontWeight','bold')
+text(1,ylim(2),'f','FontSize',12, 'FontWeight','bold')
 
 % Region 4
 subplot(5,2,8)
@@ -243,7 +243,7 @@ ax.Position(3) = xw;
 ax.Position(4) = yh;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 4','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(1,ylim(2),'E','FontSize',12, 'FontWeight','bold')
+text(1,ylim(2),'e','FontSize',12, 'FontWeight','bold')
 
 % Region 3
 subplot(5,2,7)
@@ -284,7 +284,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',10);
 ylb.Position(1) = -2.25;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 3','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(1,ylim(2),'D','FontSize',12, 'FontWeight','bold')
+text(1,ylim(2),'d','FontSize',12, 'FontWeight','bold')
 
 % Region 2
 subplot(5,2,6)
@@ -323,7 +323,7 @@ ax.Position(3) = xw;
 ax.Position(4) = yh;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 2','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(1,ylim(2),'C','FontSize',12, 'FontWeight','bold')
+text(1,ylim(2),'c','FontSize',12, 'FontWeight','bold')
 
 % Region 1
 subplot(5,2,5)
@@ -364,7 +364,7 @@ ylb = ylabel(ax, '\DeltaQ (m^{3} s^{-1})', 'FontSize',10);
 ylb.Position(1) = -2.25;
 ylim = get(ax, 'YLim');
 text(13.5,ylim(2),'Region 1','HorizontalAlignment','right','FontSize',9, 'VerticalAlignment','middle')
-text(1,ylim(2),'B','FontSize',12, 'FontWeight','bold')
+text(1,ylim(2),'b','FontSize',12, 'FontWeight','bold')
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300',['./output/monthly-climate-contributions-runoff-',num2str(syear),'-',num2str(eyear),'.tif'])

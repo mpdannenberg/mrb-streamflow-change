@@ -25,7 +25,7 @@ set(gca, 'TickDir','out', 'XTickLabel','')
 box off;
 ylabel('Q (m^{3} s^{-1})')
 ylim = get(gca, 'YLim');
-text(1931, ylim(2), 'A', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
+text(1931, ylim(2), 'a', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
 ax = gca; ax.Position(2) = ax.Position(2)+0.02;
 
 subplot(2,4,4)
@@ -42,7 +42,7 @@ ax.Position(3) = 0.12;
 ylabel('MsTMIP (m^{3} s^{-1})')
 r = corr(T.HEMO(ib), mean(Q(ia,:), 2), 'rows','pairwise');
 text(lim(2), lim(1), sprintf('R = %.02f', r), 'HorizontalAlignment','right', 'VerticalAlignment','bottom', 'FontSize',7)
-text(diff(lim)*0.04, lim(2), 'B', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
+text(diff(lim)*0.04, lim(2), 'b', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
 
 load ./data/McCabeWilliams_WaterBudget.mat;
 [~, ia, ib] = intersect(year, T.Year);
@@ -57,7 +57,7 @@ box off;
 ylabel('Q (m^{3} s^{-1})')
 xlabel('Water year')
 ylim = get(gca, 'YLim');
-text(1931, ylim(2), 'C', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
+text(1931, ylim(2), 'c', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
 ax = gca; ax.Position(2) = ax.Position(2)+0.02;
 
 subplot(2,4,8)
@@ -76,7 +76,7 @@ xl = xlabel('Gage (m^{3} s^{-1})');
 xl.Position(2) = -1500;
 r = corr(T.HEMO(ib), mean(Q(ia,:), 2), 'rows','pairwise');
 text(lim(2), lim(1), sprintf('R = %.02f', r), 'HorizontalAlignment','right', 'VerticalAlignment','bottom', 'FontSize',7)
-text(diff(lim)*0.04, lim(2), 'D', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
+text(diff(lim)*0.04, lim(2), 'd', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r600','./output/models-vs-gages.tif')
