@@ -37,7 +37,7 @@ area = reshape(area, ny, nx);
 
 clear LAT LON LatLon IN ON idx e;
 
-%% Get LULCC data at beginning and end
+%% Get LULCC fractional data at beginning and end
 type = ncread('mstmip_driver_global_hd_lulcc_1801_v1.nc4', 'type');
 lc1801 = permute(ncread('mstmip_driver_global_hd_lulcc_1801_v1.nc4', 'biome_frac'), [2 1 3]);
 tree1801 = sum(lc1801(latidx, lonidx, type>=1 & type<=9), 3) + 0.5*sum(lc1801(latidx, lonidx, type>=10 & type<=36), 3);
@@ -52,6 +52,51 @@ shrub2010 = lc2010(latidx, lonidx, type==37) + 0.5*sum(lc2010(latidx, lonidx, (t
 grass2010 = lc2010(latidx, lonidx, type==41) + 0.5*sum(lc2010(latidx, lonidx, (type>=19 & type<=27) | type==38 | (type>=42 & type<=43)), 3);
 crop2010 = lc2010(latidx, lonidx, type==44) + 0.5*sum(lc2010(latidx, lonidx, (type>=28 & type<=36) | type==39 | type==43), 3);
 tree2010(~MRBidx) = NaN; shrub2010(~MRBidx) = NaN; grass2010(~MRBidx) = NaN; crop2010(~MRBidx) = NaN; 
+
+%% get dominant LU
+lc = permute(ncread('mstmip_driver_global_hd_lulcc_1801_v1.nc4', 'biome_type'), [2 1 3]);
+lc = lc(latidx, lonidx);
+lc1801 = NaN(ny, nx);
+lc1801(lc == 46) = 1; % urban
+lc1801(lc == 2 | lc == 5 | lc == 8) = 2; % deciduous forest
+lc1801(lc == 1 | lc == 4 | lc == 7) = 3; % evergreen forest
+lc1801(lc == 3 | lc == 6 | lc == 9) = 4; % mixed forest
+lc1801(lc >= 28 & lc <= 36) = 5; % mixed tree-crop
+lc1801(lc == 38) = 6; % shrub-grass
+lc1801(lc == 39) = 7; % shrub-crop
+lc1801(lc == 40) = 8; % shrub-barren
+lc1801(lc == 41) = 9; % grass
+lc1801(lc == 42) = 10; % grass-crop
+lc1801(lc == 44) = 11; % crop
+lc1801(~MRBidx) = NaN;
+
+lc = permute(ncread('mstmip_driver_global_hd_lulcc_2010_v1.nc4', 'biome_type'), [2 1 3]);
+lc = lc(latidx, lonidx);
+lc2010 = NaN(ny, nx);
+lc2010(lc == 46) = 1; % urban
+lc2010(lc == 2 | lc == 5 | lc == 8) = 2; % deciduous forest
+lc2010(lc == 1 | lc == 4 | lc == 7) = 3; % evergreen forest
+lc2010(lc == 3 | lc == 6 | lc == 9) = 4; % mixed forest
+lc2010(lc >= 28 & lc <= 36) = 5; % mixed tree-crop
+lc2010(lc == 38) = 6; % shrub-grass
+lc2010(lc == 39) = 7; % shrub-crop
+lc2010(lc == 40) = 8; % shrub-barren
+lc2010(lc == 41) = 9; % grass
+lc2010(lc == 42) = 10; % grass-crop
+lc2010(lc == 44) = 11; % crop
+lc2010(~MRBidx) = NaN;
+
+lcclr = [237 0 0 % urb
+    105 171 99 % decid
+    28 99 48 % ever
+    181 201 143 %mixed
+    mean([105 171 99; 171 112 41])
+    204 186 125 %shrub-grass
+    mean([204 186 125; 171 112 41]) %shrub-crop
+    179 173 163 %shrub-barren
+    227 227 194 %grass
+    219 217 61 %grass-crop
+    171 112 41]/255;  %crop
 
 %% Get LULCC time series
 yr = syear:eyear;
@@ -87,10 +132,75 @@ lonlim=[-115 -89];
 
 h = figure('Color','w');
 h.Units = 'inches';
-h.Position = [1 1 6.5 6.5];
+h.Position = [1 1 6.5 8.5];
 clr = cbrewer('div','RdBu',20); clr(clr<0) = 0; clr(clr>1) = 1;
 
-subplot(3,2,1)
+subplot(4,2,1)
+axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
+        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
+        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+axis off;
+axis image;
+surfm(double(lat(latidx))+0.25, double(lon(lonidx))-0.25, lc1801);
+caxis([0.5 11.5])
+colormap(gca, lcclr)
+geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
+geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+ttl = title('1801 land cover', 'FontSize',12); ttl.Position(2) = 0.84;
+ax = gca;
+ax.Position(1) = 0.1;
+subplotsqueeze(ax, 1.1)
+ax.Position(2) = 0.81;
+text(-0.16, 0.83, 'a', 'FontSize',12, 'FontWeight','bold')
+
+subplot(4,2,2)
+axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
+        'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
+        'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
+        'none', 'FontName', 'Helvetica','MLabelParallel','north',...
+        'FLineWidth',1, 'GColor',[0.5 0.5 0.5], 'FontSize',8)
+axis off;
+axis image;
+surfm(double(lat(latidx))+0.25, double(lon(lonidx))-0.25, lc2010);
+caxis([0.5 11.5])
+colormap(gca, lcclr)
+geoshow(states,'FaceColor','none','EdgeColor',[0.5 0.5 0.5],'LineWidth',0.5)
+geoshow(SR1(1,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR2(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR3(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR4(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR5(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
+ttl = title('2010 land cover', 'FontSize',12); ttl.Position(2) = 0.84;
+ax = gca;
+ax.Position(1) = 0.56;
+subplotsqueeze(ax, 1.1)
+ax.Position(2) = 0.81;
+text(-0.16, 0.83, 'b', 'FontSize',12, 'FontWeight','bold')
+
+cb = colorbar('southoutside');
+cb.Position(1) = 0.1;
+cb.Position(2) = 0.79;
+cb.Position(3) = 0.8;
+cb.Position(4) = 0.015;
+cb.FontSize = 8;
+cb.Ticks = 1:11;
+cb.TickLength = 0;
+cb.TickLabels = {'Urban','Deciduous trees',...
+    'Evergreen trees','Mixed trees','Trees & crops',...
+    'Shrubs & grasses','Shrubs & crops','Shrubs & barren','Grasses',...
+    'Grasses & crops','Crops'};
+cb.Ruler.TickLabelRotation=20;
+
+
+subplot(4,2,3)
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
@@ -111,11 +221,11 @@ geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 ttl = title('tree', 'FontSize',12); ttl.Position(2) = 0.84;
 ax = gca;
 ax.Position(1) = 0.1;
-ax.Position(2) = 0.7;
 subplotsqueeze(ax, 1.1)
-text(-0.16, 0.83, 'a', 'FontSize',12, 'FontWeight','bold')
+ax.Position(2) = 0.54;
+text(-0.16, 0.83, 'c', 'FontSize',12, 'FontWeight','bold')
 
-subplot(3,2,2)
+subplot(4,2,4)
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
@@ -136,11 +246,11 @@ geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 ttl = title('shrub', 'FontSize',12); ttl.Position(2) = 0.84;
 ax = gca;
 ax.Position(1) = 0.56;
-ax.Position(2) = 0.7;
 subplotsqueeze(ax, 1.1)
-text(-0.16, 0.83, 'b', 'FontSize',12, 'FontWeight','bold')
+ax.Position(2) = 0.54;
+text(-0.16, 0.83, 'd', 'FontSize',12, 'FontWeight','bold')
 
-subplot(3,2,3)
+subplot(4,2,5)
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
@@ -161,11 +271,11 @@ geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 ttl = title('grass', 'FontSize',12); ttl.Position(2) = 0.84;
 ax = gca;
 ax.Position(1) = 0.1;
-ax.Position(2) = 0.4;
 subplotsqueeze(ax, 1.1)
-text(-0.16, 0.83, 'c', 'FontSize',12, 'FontWeight','bold')
+ax.Position(2) = 0.33;
+text(-0.16, 0.83, 'e', 'FontSize',12, 'FontWeight','bold')
 
-subplot(3,2,4)
+subplot(4,2,6)
 axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'on','PLineLocation',4,'MLineLocation',6,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
@@ -186,19 +296,20 @@ geoshow(SR6(2,1),'FaceColor','none','EdgeColor','k','LineWidth',0.75)
 ttl = title('crop', 'FontSize',12); ttl.Position(2) = 0.84;
 ax = gca;
 ax.Position(1) = 0.56;
-ax.Position(2) = 0.4;
 subplotsqueeze(ax, 1.1)
-text(-0.16, 0.83, 'd', 'FontSize',12, 'FontWeight','bold')
+ax.Position(2) = 0.33;
+text(-0.16, 0.83, 'f', 'FontSize',12, 'FontWeight','bold')
 
 cb = colorbar('southoutside');
-cb.Position = [0.1 0.34 0.8 0.025];
+cb.Position = [0.1 0.31 0.8 0.015];
 cb.Ticks = -1:0.1:1;
 cb.TickLabels = {'-1','','-0.8','','-0.6','','-0.4','','-0.2','','0','','0.2','','0.4','','0.6','','0.8','','1'};
-cb.TickLength = 0.03;
+cb.TickLength = 0.022;
+cb.Ruler.TickLabelRotation=0;
 xlabel(cb, '\Deltaf_{c}', 'FontSize',10)
 
 %% time series
-subplot(3,2,[5 6])
+subplot(4,2,[7 8])
 ax = gca;
 ax.Position(2) = 0.06;
 ax.Position(4) = 0.18;
@@ -220,7 +331,7 @@ legend('boxoff')
 yl = ylabel('f_{c}', 'Rotation',0,'HorizontalAlignment','right','VerticalAlignment','middle', 'FontSize',10);
 yl.Position(1) = 1785;
 xlabel('Year')
-text(1805, 0.6, 'e', 'FontSize',12, 'FontWeight','bold')
+text(1805, 0.6, 'g', 'FontSize',12, 'FontWeight','bold')
 hold off;
 
 set(gcf,'PaperPositionMode','auto')
