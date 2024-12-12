@@ -15,7 +15,10 @@ Estimate streamflow from water-budget model simulations driven by Williams varia
 Compare modeled and measured runoff ratio (for supplemental material)
 
 #### compare_models_gages.m
-Compared modeled streamflow (MsTMIP and MW11) to measured streamflow at Hermann, MO gage (supplementary figure)
+Compare modeled streamflow (MsTMIP and MW11) to measured streamflow at Hermann, MO gage (supplementary figure)
+
+#### compare_wy_peak_mean.m
+Compare water-year peak flow to water-year mean flow (supplementary figure)
 
 
 ### Make study area maps
@@ -46,4 +49,7 @@ Calculate contribution of each factor to flow change between mid and late centur
 
 #### plot_monthly_climate_contributions_runoff.m
 Calculate contributions of each factor to flow change between mid and late century for each individual region within the MRB
+
+#### plot_qnat_teleconnection_correlations.m
+Calculate and plot correlations between the "natural" component of MRB flow and seasonal composites of teleconnection indices (Nino3.4, PNA, NAO, and AMO)
 
