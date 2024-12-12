@@ -132,18 +132,6 @@ set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','../output/wbm-hemo-Q.tif')
 close all;
 
-% %% bias correct
-% [~,ia,ib] = intersect(year, T.Year);
-% x = Q_S3_WY(ia); y = T.HEMO(ib);
-% mx = mean(x(~isnan(x) & ~isnan(y)));
-% my = mean(y(~isnan(x) & ~isnan(y)));
-% sx = std(x(~isnan(x) & ~isnan(y)));
-% sy = std(y(~isnan(x) & ~isnan(y)));
-% Q_S0_WY_sc = my + sy*((Q_S0_WY - mx)/sx);
-% Q_S1_WY_sc = my + sy*((Q_S1_WY - mx)/sx);
-% Q_S2_WY_sc = my + sy*((Q_S2_WY - mx)/sx);
-% Q_S3_WY_sc = my + sy*((Q_S3_WY - mx)/sx);
-
 %% save data
 cd ..;
 save('./data/McCabeWilliams_WaterBudget.mat', 'year', 'lat', 'lon', 'MRBidx',...
