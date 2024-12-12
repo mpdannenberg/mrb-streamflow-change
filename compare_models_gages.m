@@ -44,6 +44,23 @@ r = corr(T.HEMO(ib), mean(Q(ia,:), 2), 'rows','pairwise');
 text(lim(2), lim(1), sprintf('R = %.02f', r), 'HorizontalAlignment','right', 'VerticalAlignment','bottom', 'FontSize',7)
 text(diff(lim)*0.04, lim(2), 'b', 'FontSize',12, 'VerticalAlignment','middle', 'FontWeight','bold')
 
+% make table of individual model correlations and trends 
+r = corr(Q(ia, :), T.HEMO(ib));
+Rb = table('Size',[length(models) 3],...
+    'VariableTypes',{'string','double','string'},...
+    'VariableNames',{'Model','R','Trend'});
+Rb.Model = models';
+Rb.R = r;
+idx = year >= 1931 & year <= 2010;
+for i = 1:length(models)
+    mdl = fitlm(year(idx), Q(idx,i));
+    b = mdl.Coefficients.Estimate(2);
+    se = mdl.Coefficients.SE(2);
+    Rb.Trend(i) = [sprintf('%0.1f ',b),char(177),sprintf(' %0.1f',1.96*se)];
+end
+writetable(Rb, './output/mstmip-model-corrs-trends.xlsx');
+
+% MW11
 load ./data/McCabeWilliams_WaterBudget.mat;
 [~, ia, ib] = intersect(year, T.Year);
 Q = Q_S3_WY;
